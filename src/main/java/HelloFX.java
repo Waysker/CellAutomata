@@ -20,13 +20,13 @@ public class HelloFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        final int generations = 10;
         ArrayList<Integer> nextList = new ArrayList<>(List.of(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0));
 
         Group root = new Group();
         Scene scene = new Scene(root, Color.WHITE);
 
-        for (int n = 0; n < 10; n++) {
+        for (int n = 0; n < generations; n++) {
 
             for(int i = 0; i < nextList.size(); i++){
                 Rectangle rectangle = new Rectangle();
