@@ -1,38 +1,65 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GeneratorTest {
+
     @Test
     public void testSingleGeneration_Rule1(){
-        int[] testArray = {0,0,0,0,1,1,0,1};
-        int[] expectedResultArray = {1,1,1,0,0,0,0,0};
-
-        Assertions.assertArrayEquals(expectedResultArray,Generator.generate(testArray));
+        ArrayList<Integer> testList = new ArrayList<>(List.of(0,0,0,0,1,1,0,1));
+        ArrayList<Integer> expectedList = new ArrayList<>(List.of(1,1,1,0,0,0,0,0));
+        assertEquals(expectedList, Generator.generate(testList, 1));
     }
 
-    @Test
-    public void testMultipleGeneration_Rule1(){
-        int[] testArray = {0,0,0,0,1,1,0,1};
-        int[][] expectedResultArray = {
-                {1,1,1,0,0,0,0,0},
-                {0,0,0,0,1,1,1,1},
-                {1,1,1,0,0,0,0,0},
-                {0,0,0,0,1,1,1,1}};
-
-        int[][] resultArray = new int[4][8];
-        resultArray[1] = Generator.generate(testArray);
-        for(int i = 1; i < 4; i++){
-            resultArray[i] = Generator.generate(resultArray[i-1]);
-        }
-        Assertions.assertArrayEquals(expectedResultArray[0],Generator.generate(testArray));
+    @ParameterizedTest
+    @MethodSource("arrayListProvider")
+    public void testSingleGenerationRule1_Parametrized(ArrayList<Integer> testList, ArrayList<Integer> expectedList){
+        assertEquals(expectedList, Generator.generate(testList, 1));
     }
-    public void testCalculateNextCell_Rule1(){
+    static Stream<Arguments> arrayListProvider(){
+
+       return Stream.of(
+               arguments(new ArrayList<>(List.of(0,0,0,0,1,1,0,1)),
+                       new ArrayList<>(List.of(1,1,1,0,0,0,0,0))),
+               arguments(new ArrayList<>(List.of(1,1,1,1,1,1,1,1)),
+                       new ArrayList<>(List.of(0,0,0,0,0,0,0,0))),
+               arguments(new ArrayList<>(List.of(0,0,0,0,0,0,0,0)),
+                       new ArrayList<>(List.of(1,1,1,1,1,1,1,1)))
+       );
+    }
+
+    @ParameterizedTest
+    @MethodSource("neighbourListProvider_Rule1")
+    public void testCalculateNextCell_Rule1(ArrayList<Integer> neighbour, int nextCell){
 
         Generator generator = new Generator();
         int[][] testArray = {{1,1,1},{1,1,0},{1,0,1},{1,0,0},{0,1,1},{0,1,0},{0,0,1},{0,0,0}};
         int[] expectedResultArray = {0,0,0,0,0,0,0,1};
-        //Assertions.assertArrayEquals();
+
+    }
+
+    static Stream<Arguments> neighbourListProvider_Rule1(){
+        return Stream.of(
+                arguments(new ArrayList<>(List.of(1,1,1)), 0),
+                arguments(new ArrayList<>(List.of(1,1,0)), 0),
+                arguments(new ArrayList<>(List.of(1,0,1)), 0),
+                arguments(new ArrayList<>(List.of(1,0,0)), 0),
+                arguments(new ArrayList<>(List.of(0,1,1)), 0),
+                arguments(new ArrayList<>(List.of(0,1,0)), 0),
+                arguments(new ArrayList<>(List.of(0,0,1)), 0),
+                arguments(new ArrayList<>(List.of(0,0,0)), 1)
+                );
+
     }
 }
