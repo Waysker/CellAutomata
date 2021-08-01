@@ -11,12 +11,12 @@ public class NeighbourhoodFactory {
             if(address != 0){
                 left = array.get(address-1);
             } else {
-                left = 0;
+                left = array.get(address);
             }
             if( address != array.size() - 1){
                 right = array.get(address+1);
             } else {
-                right = 0;
+                right = array.get(address);
             }
 
         return new Neighbourhood(left, me, right);

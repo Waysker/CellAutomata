@@ -46,6 +46,29 @@ class GeneratorTest {
     }
 
     @ParameterizedTest
+    @MethodSource("arrayListProvider_rule129")
+    public void testSingleGenerationRule129_Parametrized(ArrayList<Integer> testList, ArrayList<Integer> expectedList){
+        assertEquals(expectedList, Generator.generate(testList, 129));
+    }
+    static Stream<Arguments> arrayListProvider_rule129(){
+
+        return Stream.of(
+                arguments(new ArrayList<>(List.of(0,0,0,0,1,1,0,1)),
+                        new ArrayList<>(List.of(1,1,1,0,0,0,0,0))),
+                arguments(new ArrayList<>(List.of(1,1,1,1,1,1,1,1)),
+                        new ArrayList<>(List.of(0,1,1,1,1,1,1,0))),
+                arguments(new ArrayList<>(List.of(0,0,0,0,0,0,0,0)),
+                        new ArrayList<>(List.of(1,1,1,1,1,1,1,1))),
+                arguments(new ArrayList<>(List.of(0,0,0,0,1,0,0,0)),
+                        new ArrayList<>(List.of(1,1,1,0,0,0,1,1))),
+                arguments(new ArrayList<>(List.of(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0)),
+                        new ArrayList<>(List.of(1,1,1,1,1,1,0,0,0,1,1,1,1,1,1)))
+
+
+        );
+    }
+
+    @ParameterizedTest
     @MethodSource("arrayListProvider")
     public void testSingleGenerationRule1_Parametrized(ArrayList<Integer> testList, ArrayList<Integer> expectedList){
         assertEquals(expectedList, Generator.generate(testList, 1));
