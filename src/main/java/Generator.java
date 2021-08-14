@@ -1,28 +1,26 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Generator {
 
-    //create object for neighborhood
-    private static int calculateNextCell(Neighbourhood nh){
-        int state = 4*nh.left + 2*nh.me + nh.right;
-        int[] rule1 = {0,0,0,0,0,0,0,1};
-        return rule1[rule1.length - state - 1];
-    }
-
-    private static int calculateNextCell(Neighbourhood nh, int rule){
-        int state = 4*nh.left + 2*nh.me + nh.right;
+    private static int calculateNextCell(final Neighbourhood neighbourhood, int rule){
+        int state = 4*neighbourhood.left + 2*neighbourhood.me + neighbourhood.right;
         List<Integer> ruleArray = Utils.intToRuleArray(rule);
         return ruleArray.get(ruleArray.size() - state - 1);
     }
-    public static ArrayList<Integer> generate(ArrayList<Integer> array, int rule){
-        ArrayList<Integer> nextArray = new ArrayList<>();
 
-        for(int i = 0; i < array.size(); i++){
 
-            nextArray.add(calculateNextCell(new Neighbourhood(array, i), rule));
-        }
+    public static List generate(List array, int rule){
+
+        NeighbourhoodFactory neighbourhoodFactory = new NeighbourhoodFactory();
+        List<Integer> nextArray = IntStream
+                        .range(0, array.size())
+                        .map(operand -> calculateNextCell(neighbourhoodFactory.neighbourhood(array, operand), rule))
+                        .boxed()
+                        .collect(Collectors.toList());
         return nextArray;
     };
 
