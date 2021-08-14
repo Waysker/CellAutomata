@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-public class CellAutomata extends Application {git
+public class CellAutomata extends Application {
 
     final int width = 1080;
     final int height = 920;
