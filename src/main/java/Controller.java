@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.GridPane;
+
+import javax.inject.Inject;
 import java.util.List;
 
 
@@ -22,31 +24,30 @@ public class Controller {
     @FXML
     private GridPane myGridPane;
 
-    final private List<Integer> initList = List.of(0,0,0,0,0,1,0,0,0,0
-            ,0,0,0,0,0,0,1,0,0,0
-            ,0,0,0,0,0,0,0,0,0,0
-            ,0,0,0,0,0,0,1,0,0,0
-            ,0,0,0,0,0,0,1,0,0,0
-            ,0,0,0,0,0,0,1,0,0,0
-            ,0,0,0,0,0,0,1,0,0,0
-            ,0,0,0,0,0,0,1,0,0,0
-            ,0,0,0,0,0,0,1,0,0,0);
-
 
     private List<Integer> nextList;
 
     int ruleValue;
 
-    final int screenWidth = 1080;
-    final int screenHeight = 920;
+    private final Generator generator;
+    private final Renderer renderer;
+    private final Configuration configuration;
+
+    @Inject
+    public Controller(final Generator generator,
+                      final Renderer renderer,
+                      final Configuration configuration) {
+        this.generator = generator;
+        this.renderer = renderer;
+        this.configuration = configuration;
+    }
 
     @FXML
     public void initialize() {
-        Renderer renderer = new Renderer(5, screenWidth/initList.size());
 
         initializeCellGridPane();
 
-        nextList = initList;
+        nextList = configuration.getInitList();
         renderer.render(nextList, myGridPane);
 
         initializeSpinner();
@@ -76,7 +77,7 @@ public class Controller {
 
     private void initializeNextButton(Renderer renderer){
         nextButton.setOnMouseClicked(mouseEvent -> {
-            nextList = Generator.generate(nextList, ruleValue);
+            nextList = generator.generate(nextList, ruleValue);
             renderer.render(nextList, myGridPane);
         });
     }

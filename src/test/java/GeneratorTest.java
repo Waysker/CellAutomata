@@ -15,17 +15,19 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GeneratorTest {
 
+    private final Generator generator = new Generator();
+
     @Test
     public void testSingleGeneration_Rule1(){
         ArrayList<Integer> testList = new ArrayList<>(List.of(0,0,0,0,1,1,0,1));
         ArrayList<Integer> expectedList = new ArrayList<>(List.of(1,1,1,0,0,0,0,0));
-        assertEquals(expectedList, Generator.generate(testList, 1));
+        assertEquals(expectedList, generator.generate(testList, 1));
     }
 
     @ParameterizedTest
     @MethodSource("arrayListProvider_rule2")
     public void testSingleGenerationRule2_Parametrized(ArrayList<Integer> testList, ArrayList<Integer> expectedList){
-        assertEquals(expectedList, Generator.generate(testList, 2));
+        assertEquals(expectedList, generator.generate(testList, 2));
     }
     static Stream<Arguments> arrayListProvider_rule2(){
 
@@ -48,7 +50,7 @@ class GeneratorTest {
     @ParameterizedTest
     @MethodSource("arrayListProvider_rule129")
     public void testSingleGenerationRule129_Parametrized(ArrayList<Integer> testList, ArrayList<Integer> expectedList){
-        assertEquals(expectedList, Generator.generate(testList, 129));
+        assertEquals(expectedList, generator.generate(testList, 129));
     }
     static Stream<Arguments> arrayListProvider_rule129(){
 
@@ -71,7 +73,7 @@ class GeneratorTest {
     @ParameterizedTest
     @MethodSource("arrayListProvider")
     public void testSingleGenerationRule1_Parametrized(ArrayList<Integer> testList, ArrayList<Integer> expectedList){
-        assertEquals(expectedList, Generator.generate(testList, 1));
+        assertEquals(expectedList, generator.generate(testList, 1));
     }
     static Stream<Arguments> arrayListProvider(){
 

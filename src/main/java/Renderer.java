@@ -3,14 +3,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Renderer {
 
-    final int colMax;
-    final double cellDimension;
+    private final int colMax;
+    private final double cellDimension;
+
+    @Inject
+    public Renderer(final Configuration configuration)
+    {
+        this.colMax = 5;
+        this.cellDimension = configuration.getScreenWidth() / configuration.getInitList().size();
+    }
 
     public void render(List<Integer> nextList, GridPane gridPane) {
 
@@ -71,8 +79,4 @@ public class Renderer {
         return rectangle;
     }
 
-    public Renderer(int colMax, double cellDimension) {
-        this.colMax = colMax;
-        this.cellDimension = cellDimension;
-    }
 }
