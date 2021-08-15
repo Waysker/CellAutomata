@@ -24,10 +24,5 @@ public class Generator {
         return nextArray;
     };
 
-    final public void createNextGeneration(){
-
-    }
-
-
 
 }

@@ -9,8 +9,13 @@ import java.util.List;
 
 public class Renderer {
 
-    final int colMax;
-    final double cellDimension;
+    final private int colMax;
+    final private double cellDimension;
+
+    public Renderer(int colMax, double cellDimension) {
+        this.colMax = colMax;
+        this.cellDimension = cellDimension;
+    }
 
     public void render(List<Integer> nextList, GridPane gridPane) {
 
@@ -24,7 +29,7 @@ public class Renderer {
     }
 
     private void moveRowsUpByOne(GridPane gridPane) {
-        ArrayList<ArrayList<Node>> gridPaneNodes = new ArrayList<>();
+        ArrayList<ArrayList<Node>> gridPaneNodes = new ArrayList<ArrayList<Node>>();
         for(int i = 0; i < gridPane.getRowCount(); i++) {
             gridPaneNodes.add(new ArrayList());
         }
@@ -71,8 +76,5 @@ public class Renderer {
         return rectangle;
     }
 
-    public Renderer(int colMax, double cellDimension) {
-        this.colMax = colMax;
-        this.cellDimension = cellDimension;
-    }
+
 }
