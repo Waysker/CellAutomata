@@ -40,55 +40,52 @@ class GeneratorTest {
                         new ArrayList<>(List.of(0,0,0,1,0,0,0,0))),
                 arguments(new ArrayList<>(List.of(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0)),
                         new ArrayList<>(List.of(0,0,0,0,0,0,1,0,0,0,0,0,0,0,0)))
+        );
+    }
 
+    @ParameterizedTest
+    @MethodSource("arrayListProvider_rule129")
+    public void testSingleGenerationRule129_Parametrized(List<Integer> testList, List<Integer> expectedList){
+        assertEquals(expectedList, Generator.generate(testList, 129));
+    }
+    static Stream<Arguments> arrayListProvider_rule129(){
+
+        return Stream.of(
+                arguments(List.of(0,0,0,0,1,1,0,1),
+                        List.of(1,1,1,0,0,0,0,0)),
+                arguments(List.of(1,1,1,1,1,1,1,1),
+                        List.of(1,1,1,1,1,1,1,1)),
+                arguments(List.of(0,0,0,0,0,0,0,0),
+                        List.of(1,1,1,1,1,1,1,1)),
+                arguments(List.of(0,0,0,0,1,0,0,0),
+                        List.of(1,1,1,0,0,0,1,1)),
+                arguments(List.of(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0),
+                        List.of(1,1,1,1,1,1,0,0,0,1,1,1,1,1,1))
 
         );
     }
 
     @ParameterizedTest
     @MethodSource("arrayListProvider")
-    public void testSingleGenerationRule1_Parametrized(ArrayList<Integer> testList, ArrayList<Integer> expectedList){
+    public void testSingleGenerationRule1_Parametrized(List<Integer> testList, List<Integer> expectedList){
         assertEquals(expectedList, Generator.generate(testList, 1));
     }
     static Stream<Arguments> arrayListProvider(){
 
        return Stream.of(
-               arguments(new ArrayList<>(List.of(0,0,0,0,1,1,0,1)),
-                       new ArrayList<>(List.of(1,1,1,0,0,0,0,0))),
-               arguments(new ArrayList<>(List.of(1,1,1,1,1,1,1,1)),
-                       new ArrayList<>(List.of(0,0,0,0,0,0,0,0))),
-               arguments(new ArrayList<>(List.of(0,0,0,0,0,0,0,0)),
-                       new ArrayList<>(List.of(1,1,1,1,1,1,1,1))),
-               arguments(new ArrayList<>(List.of(0,0,0,0,1,0,0,0)),
-                       new ArrayList<>(List.of(1,1,1,0,0,0,1,1))),
-               arguments(new ArrayList<>(List.of(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0)),
-                       new ArrayList<>(List.of(1,1,1,1,1,1,0,0,0,1,1,1,1,1,1)))
+               arguments(List.of(0,0,0,0,1,1,0,1),
+                       List.of(1,1,1,0,0,0,0,0)),
+               arguments(List.of(1,1,1,1,1,1,1,1),
+                       List.of(0,0,0,0,0,0,0,0)),
+               arguments(List.of(0,0,0,0,0,0,0,0),
+                       List.of(1,1,1,1,1,1,1,1)),
+               arguments(List.of(0,0,0,0,1,0,0,0),
+                       List.of(1,1,1,0,0,0,1,1)),
+               arguments(List.of(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0),
+                       List.of(1,1,1,1,1,1,0,0,0,1,1,1,1,1,1))
 
 
        );
     }
 
-    @ParameterizedTest
-    @MethodSource("neighbourListProvider_Rule1")
-    public void testCalculateNextCell_Rule1(ArrayList<Integer> neighbour, int nextCell){
-
-        Generator generator = new Generator();
-        int[][] testArray = {{1,1,1},{1,1,0},{1,0,1},{1,0,0},{0,1,1},{0,1,0},{0,0,1},{0,0,0}};
-        int[] expectedResultArray = {0,0,0,0,0,0,0,1};
-
-    }
-
-    static Stream<Arguments> neighbourListProvider_Rule1(){
-        return Stream.of(
-                arguments(new ArrayList<>(List.of(1,1,1)), 0),
-                arguments(new ArrayList<>(List.of(1,1,0)), 0),
-                arguments(new ArrayList<>(List.of(1,0,1)), 0),
-                arguments(new ArrayList<>(List.of(1,0,0)), 0),
-                arguments(new ArrayList<>(List.of(0,1,1)), 0),
-                arguments(new ArrayList<>(List.of(0,1,0)), 0),
-                arguments(new ArrayList<>(List.of(0,0,1)), 0),
-                arguments(new ArrayList<>(List.of(0,0,0)), 1)
-                );
-
-    }
 }

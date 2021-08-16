@@ -13,7 +13,7 @@ public class Generator {
     }
 
 
-    public static List generate(List array, int rule){
+    public static List<Integer> generate(List<Integer> array, int rule){
 
         NeighbourhoodFactory neighbourhoodFactory = new NeighbourhoodFactory();
         List<Integer> nextArray = IntStream
@@ -23,7 +23,6 @@ public class Generator {
                         .collect(Collectors.toList());
         return nextArray;
     };
-
 
 
 }
